@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://milkdeliver.github.io/"/>
-  <updated>2020-05-20T09:54:59.456Z</updated>
+  <updated>2020-05-20T10:05:54.096Z</updated>
   <id>https://milkdeliver.github.io/</id>
   
   <author>
@@ -21,9 +21,9 @@
     <link href="https://milkdeliver.github.io/2020/05/20/SAP-%E4%BA%91%E5%B9%B3%E5%8F%B0%E6%A6%82%E8%A7%88%E8%AE%B2%E8%A7%A3/"/>
     <id>https://milkdeliver.github.io/2020/05/20/SAP-%E4%BA%91%E5%B9%B3%E5%8F%B0%E6%A6%82%E8%A7%88%E8%AE%B2%E8%A7%A3/</id>
     <published>2020-05-20T09:23:41.000Z</published>
-    <updated>2020-05-20T09:54:59.456Z</updated>
+    <updated>2020-05-20T10:05:54.096Z</updated>
     
-    <content type="html"><![CDATA[<h2 id="本次视频主要内容"><a href="#本次视频主要内容" class="headerlink" title="本次视频主要内容"></a>本次视频主要内容</h2><ul><li>讲解关于SAP Cloud Platform云平台概览。</li><li>通过一个SF扩展的例子帮助学习者快速建立SAP云台初步印象</li><li>SAP Cloud Platform支持渠道</li></ul><video id="video" controls="" width= "100%"  preload="none" poster="https://blog-1252828110.cos.ap-shanghai.myqcloud.com/img/poster/openday.png">      <source id="mp4" src="https://blog-1252828110.cos.ap-shanghai.myqcloud.com/video/SCP%20Overview.mp4" type="video/mp4"></video><iframe src="https://blog-1252828110.cos.ap-shanghai.myqcloud.com/files/CP%20Open%20Day.pdf" width="100%" height="300" frameborder="0" loading="lazy" allowfullscreen></iframe><h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><ul><li>SAP Product Support <a href="https://support.sap.com/en/my-support/product-support.html" target="_blank" rel="noopener">https://support.sap.com/en/my-support/product-support.html</a></li><li>SAP Cloud Platform诊所 <a href="https://sapclinic-g77f25ab1.dispatcher.jp1.hana.ondemand.com/#/mySlot?useLang=en" target="_blank" rel="noopener">https://sapclinic-g77f25ab1.dispatcher.jp1.hana.ondemand.com/#/mySlot?useLang=en</a></li><li>王楠老师healthcheck例子 <a href="https://github.com/superwangnan/healthcheckapp" target="_blank" rel="noopener">https://github.com/superwangnan/healthcheckapp</a></li></ul><h2 id="致谢"><a href="#致谢" class="headerlink" title="致谢"></a>致谢</h2><p>感谢 SAP Cloud Platform Presales 王楠 ｜ Neo（TaiWan) ｜于瀚<br>感谢 SAP Cloud Analytic Presale 马颂</p>]]></content>
+    <content type="html"><![CDATA[<h2 id="本次视频主要内容"><a href="#本次视频主要内容" class="headerlink" title="本次视频主要内容"></a>本次视频主要内容</h2><ul><li>讲解关于SAP Cloud Platform云平台概览。</li><li>通过一个SF扩展的例子帮助学习者快速建立SAP云台初步印象</li><li>SAP Cloud Platform支持渠道</li></ul><video id="video" controls="" width= "100%"  preload="none" poster="https://blog-1252828110.cos.ap-shanghai.myqcloud.com/img/poster/openday.png">      <source id="mp4" src="https://blog-1252828110.cos.ap-shanghai.myqcloud.com/video/SCP%20Overview.mp4" type="video/mp4"></video><!-- <iframe src="https://blog-1252828110.cos.ap-shanghai.myqcloud.com/files/CP%20Open%20Day.pdf" width="800" height="450" frameborder="0" loading="lazy" allowfullscreen></iframe> --><h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><ul><li>SAP Product Support <a href="https://support.sap.com/en/my-support/product-support.html" target="_blank" rel="noopener">https://support.sap.com/en/my-support/product-support.html</a></li><li>SAP Cloud Platform诊所 <a href="https://sapclinic-g77f25ab1.dispatcher.jp1.hana.ondemand.com/#/mySlot?useLang=en" target="_blank" rel="noopener">https://sapclinic-g77f25ab1.dispatcher.jp1.hana.ondemand.com/#/mySlot?useLang=en</a></li><li>王楠老师healthcheck例子 <a href="https://github.com/superwangnan/healthcheckapp" target="_blank" rel="noopener">https://github.com/superwangnan/healthcheckapp</a></li><li>PPT <a href="https://blog-1252828110.cos.ap-shanghai.myqcloud.com/files/CP%20Open%20Day.pdf" target="_blank" rel="noopener">https://blog-1252828110.cos.ap-shanghai.myqcloud.com/files/CP%20Open%20Day.pdf</a></li></ul><h2 id="致谢"><a href="#致谢" class="headerlink" title="致谢"></a>致谢</h2><p>感谢 SAP Cloud Platform Presales 王楠 ｜ Neo（TaiWan) ｜于瀚<br>感谢 SAP Cloud Analytic Presale 马颂</p>]]></content>
     
     <summary type="html">
     
