@@ -1,0 +1,188 @@
+<!DOCTYPE html><html lang="CN"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> SAC&BW4/HANA基于SAP IAS · 送奶工的日常</title><meta name="description" content="SAC&amp;BW4/HANA基于SAP IAS - Sam Sun"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/favicon.png"><link rel="stylesheet" href="/css/apollo.css"><link rel="search" type="application/opensearchdescription+xml" href="https://milkdeliver.github.io/atom.xml" title="送奶工的日常"><meta name="generator" content="Hexo 4.2.0"><link rel="alternate" href="/atom.xml" title="送奶工的日常" type="application/atom+xml">
+</head><body><div class="wrap"><header><a href="/" class="logo-link"><img src="/favicon.png" alt="logo"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/" target="_self" class="nav-list-link">BLOG</a></li><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">ARCHIVE</a></li><li class="nav-list-item"><a href="/me/" target="_self" class="nav-list-link">ME</a></li><li class="nav-list-item"><a href="https://github.com/milkdeliver" target="_blank" class="nav-list-link">GITHUB</a></li><li class="nav-list-item"><a href="/atom.xml" target="_self" class="nav-list-link">RSS</a></li></ul></header><main class="container"><div class="post"><article class="post-block"><h1 class="post-title">SAC&BW4/HANA基于SAP IAS</h1><div class="post-info">Jun 22, 2021</div><div class="post-content"><!-- TOC -->
+
+<ul>
+<li><a href="#ias">IAS</a><ul>
+<li><a href="#1sap-ias创建租户">【1】SAP IAS创建租户</a></li>
+<li><a href="#2上传sac-saml20-metadata">【2】上传SAC SAML2.0 Metadata</a></li>
+<li><a href="#3修改subject-name-identifier">【3】修改Subject Name Identifier</a></li>
+<li><a href="#4-bw租户创建">【4】 BW租户创建</a></li>
+</ul>
+</li>
+<li><a href="#sac">SAC</a><ul>
+<li><a href="#1-下载sac-saml-metadata">【1】 下载SAC SAML Metadata</a></li>
+<li><a href="#2-上传idp-saml-metadata">【2】 上传IDP SAML Metadata</a></li>
+<li><a href="#3-选择映射字段">【3】 选择映射字段</a></li>
+<li><a href="#4-验证映射正常工作">【4】 验证映射正常工作</a></li>
+<li><a href="#5保存结果">【5】保存结果</a></li>
+</ul>
+</li>
+<li><a href="#bw-cors配置">BW CORS配置</a><ul>
+<li><a href="#1bw参数调整">【1】BW参数调整</a></li>
+<li><a href="#bw-as-abap安装ssl证书">BW AS ABAP安装SSL证书</a></li>
+<li><a href="#sicf激活相应服务">SICF激活相应服务</a></li>
+<li><a href="#4维护http-allowlist配置">【4】维护HTTP Allowlist配置。</a></li>
+<li><a href="#5配置rewrite文件">【5】配置rewrite文件</a></li>
+<li><a href="#6将自定义-web-内容安装到-sap-netweaver-服务器">【6】将自定义 Web 内容安装到 SAP NetWeaver 服务器</a></li>
+</ul>
+</li>
+<li><a href="#bw-saml20配置">BW SAML2.0配置</a><ul>
+<li><a href="#1启用saml20服务">【1】启用SAML2.0服务</a></li>
+<li><a href="#2bw端导入idp证书">【2】BW端导入IDP证书</a></li>
+<li><a href="#3问题和解决方案">【3】问题和解决方案</a></li>
+</ul>
+</li>
+<li><a href="#浏览器设定">浏览器设定</a></li>
+</ul>
+<!-- /TOC -->
+
+
+<p><img src="https://blog-1252828110.cos.ap-shanghai.myqcloud.com/img/04-sac-bw-ias/overview.png" alt="overview"></p>
+<h2 id="IAS"><a href="#IAS" class="headerlink" title="IAS"></a>IAS</h2><h3 id="【1】SAP-IAS创建租户"><a href="#【1】SAP-IAS创建租户" class="headerlink" title="【1】SAP IAS创建租户"></a>【1】SAP IAS创建租户</h3><p>登录客户IAS(IDP)系统,创建BW和SAC Application</p>
+<blockquote>
+</blockquote>
+<p>IAS URL: http://&lt;id&gt;.accounts.ondemand.com/admin<br>在弹出的界面输入SAC Tenant后保存。<br><img src="https://blog-1252828110.cos.ap-shanghai.myqcloud.com/img/04-sac-bw-ias/ias-add.png" alt="sac-admin"></p>
+<p><img src="https://blog-1252828110.cos.ap-shanghai.myqcloud.com/img/04-sac-bw-ias/ias-save-success.png" alt="sac-admin"></p>
+<h3 id="【2】上传SAC-SAML2-0-Metadata"><a href="#【2】上传SAC-SAML2-0-Metadata" class="headerlink" title="【2】上传SAC SAML2.0 Metadata"></a>【2】上传SAC SAML2.0 Metadata</h3><p>选择新建的租户下的SAML2.0配置,上传元数据<br><img src="https://blog-1252828110.cos.ap-shanghai.myqcloud.com/img/04-sac-bw-ias/ias-config-SAC-saml.png" alt="sac-admin"><br><img src="https://blog-1252828110.cos.ap-shanghai.myqcloud.com/img/04-sac-bw-ias/ias-config-SAC-saml2.png" alt="sac-admin"></p>
+<h3 id="【3】修改Subject-Name-Identifier"><a href="#【3】修改Subject-Name-Identifier" class="headerlink" title="【3】修改Subject Name Identifier"></a>【3】修改Subject Name Identifier</h3><p>修改Email作为验证凭证<br><img src="https://blog-1252828110.cos.ap-shanghai.myqcloud.com/img/04-sac-bw-ias/ias-sub-change.png" alt="sac-admin"></p>
+<p><img src="https://blog-1252828110.cos.ap-shanghai.myqcloud.com/img/04-sac-bw-ias/ias-sub-change2.png" alt="sac-admin"></p>
+<h3 id="【4】-BW租户创建"><a href="#【4】-BW租户创建" class="headerlink" title="【4】 BW租户创建"></a>【4】 BW租户创建</h3><p>BW租户创建过程跟SAC一样。</p>
+<h2 id="SAC"><a href="#SAC" class="headerlink" title="SAC"></a>SAC</h2><p>操作如下图所示进入管理界面,进入SAC安全页面操作SSO配置环节。<br><img src="https://blog-1252828110.cos.ap-shanghai.myqcloud.com/img/04-sac-bw-ias/sac-admin.png" alt="sac-admin"></p>
+<p>进入安全管理菜单<br>操作如下图所示进入管理界面。<br><img src="https://blog-1252828110.cos.ap-shanghai.myqcloud.com/img/04-sac-bw-ias/sac-security.png" alt="sac-security"></p>
+<h3 id="【1】-下载SAC-SAML-Metadata"><a href="#【1】-下载SAC-SAML-Metadata" class="headerlink" title="【1】 下载SAC SAML Metadata"></a>【1】 下载SAC SAML Metadata</h3><p>SAC已经集成了Service Provider,下载好SAML Metadata，之后需要上传到IDP里面。<br><img src="https://blog-1252828110.cos.ap-shanghai.myqcloud.com/img/04-sac-bw-ias/sac-download-saml-data.png" alt="sac-download"></p>
+<h3 id="【2】-上传IDP-SAML-Metadata"><a href="#【2】-上传IDP-SAML-Metadata" class="headerlink" title="【2】 上传IDP SAML Metadata"></a>【2】 上传IDP SAML Metadata</h3><p>准备好从IDP下载下来的SAML2.0 Metadata文件，上传到第二步下面。<br><img src="https://blog-1252828110.cos.ap-shanghai.myqcloud.com/img/04-sac-bw-ias/sac-upload-saml-data.png" alt="sac-upload"></p>
+<h3 id="【3】-选择映射字段"><a href="#【3】-选择映射字段" class="headerlink" title="【3】 选择映射字段"></a>【3】 选择映射字段</h3><p>这一步可以定义也可以选择邮件映射，如果有其余选择，可以通过attribute定义。<br><a href="https://help.sap.com/viewer/00f68c2e08b941f081002fd3691d86a7/LATEST/en-US/3651184dad944aa2b361ad029a7a8cae.html" target="_blank" rel="noopener">https://help.sap.com/viewer/00f68c2e08b941f081002fd3691d86a7/LATEST/en-US/3651184dad944aa2b361ad029a7a8cae.html</a></p>
+<h3 id="【4】-验证映射正常工作"><a href="#【4】-验证映射正常工作" class="headerlink" title="【4】 验证映射正常工作"></a>【4】 验证映射正常工作</h3><p>通过邮箱或者自定的字段验证，验证之后出现绿色条，说明SSO配置成功。<br><img src="https://blog-1252828110.cos.ap-shanghai.myqcloud.com/img/04-sac-bw-ias/sac-valid-email.png" alt="sac-upload"><br><img src="https://blog-1252828110.cos.ap-shanghai.myqcloud.com/img/04-sac-bw-ias/sac-valid-email2.png" alt="sac-upload"></p>
+<h3 id="【5】保存结果"><a href="#【5】保存结果" class="headerlink" title="【5】保存结果"></a>【5】保存结果</h3><p>验证完成后保存。此时会提示转换，转换后可通过IAS登入SAC。相应的IAS（IDP) 系统中需要创建SAC系统中的账号。<br><img src="https://blog-1252828110.cos.ap-shanghai.myqcloud.com/img/04-sac-bw-ias/sac-change-auth.png" alt="sac-upload"></p>
+<h2 id="BW-CORS配置"><a href="#BW-CORS配置" class="headerlink" title="BW CORS配置"></a>BW CORS配置</h2><h3 id="【1】BW参数调整"><a href="#【1】BW参数调整" class="headerlink" title="【1】BW参数调整"></a>【1】BW参数调整</h3><p>通过RZ10设置DEFAULT.PFL 文件中的参数：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">icf&#x2F;cors_enabled &#x3D; 1</span><br><span class="line">icm&#x2F;HTTP&#x2F;mod_0 &#x3D; PREFIX&#x3D;&#x2F;,FILE&#x3D;&#x2F;sapmnt&#x2F;BWD&#x2F;profile&#x2F;rewrite.txt</span><br></pre></td></tr></table></figure>
+<p><img src="https://blog-1252828110.cos.ap-shanghai.myqcloud.com/img/04-sac-bw-ias/bw-rz10.png" alt="bw-rz10"><br>允许系统使用CORS，和配置SAC需要的rewrite文件。</p>
+<h3 id="BW-AS-ABAP安装SSL证书"><a href="#BW-AS-ABAP安装SSL证书" class="headerlink" title="BW AS ABAP安装SSL证书"></a>BW AS ABAP安装SSL证书</h3><p>建议使用CSR文件的方式获取证书，通过STRSUTSSO2进行证书安装。<br><img src="https://blog-1252828110.cos.ap-shanghai.myqcloud.com/img/04-sac-bw-ias/bw-csr.png" alt="bw-csr"></p>
+<h3 id="SICF激活相应服务"><a href="#SICF激活相应服务" class="headerlink" title="SICF激活相应服务"></a>SICF激活相应服务</h3><p>执行事务码SICF激活SAC会涉及到SICF功能节点：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;sap&#x2F;bw&#x2F;ina&#x2F;GetCatalog</span><br><span class="line">&#x2F;sap&#x2F;bw&#x2F;ina&#x2F;GetResponse</span><br><span class="line">&#x2F;sap&#x2F;bw&#x2F;ina&#x2F;GetServerInfo</span><br><span class="line">&#x2F;sap&#x2F;bw&#x2F;ina&#x2F;ValueHelp</span><br><span class="line">&#x2F;sap&#x2F;bw&#x2F;ina&#x2F;BatchProcessing</span><br><span class="line">&#x2F;sap&#x2F;bw&#x2F;ina&#x2F;Logoff</span><br></pre></td></tr></table></figure>
+<p><img src="https://blog-1252828110.cos.ap-shanghai.myqcloud.com/img/04-sac-bw-ias/bw-sicf.png" alt="bw-sicf"></p>
+<p>右键GetServerInfo服务，进行测试。如下则表示服务正常，且证书正确。<br><img src="https://blog-1252828110.cos.ap-shanghai.myqcloud.com/img/04-sac-bw-ias/bw-get-user.png" alt="bw-get-user"></p>
+<h3 id="【4】维护HTTP-Allowlist配置。"><a href="#【4】维护HTTP-Allowlist配置。" class="headerlink" title="【4】维护HTTP Allowlist配置。"></a>【4】维护HTTP Allowlist配置。</h3><p>在BW系统中执行事务码<code>UCONCOCKPIT</code>进行HTTP白名单设置<br><img src="https://blog-1252828110.cos.ap-shanghai.myqcloud.com/img/04-sac-bw-ias/bw-white-list1.png" alt="bw-get-user"><br><img src="https://blog-1252828110.cos.ap-shanghai.myqcloud.com/img/04-sac-bw-ias/bw-white-list2.png" alt="bw-get-user"></p>
+<p>切换到HTTP Whitelist Scenario，并打开编辑模式，将Cross-origin Resource Sharing从Logging模式切换到Active Check.<br><img src="https://blog-1252828110.cos.ap-shanghai.myqcloud.com/img/04-sac-bw-ias/bw-cors.png" alt="bw-get-user"></p>
+<p>然后双击Cross-origin Resource Sharing，进入白名单配置。<br><img src="https://blog-1252828110.cos.ap-shanghai.myqcloud.com/img/04-sac-bw-ias/bw-cors-add.png" alt="bw-get-user"></p>
+<p>在“白名单”下，选择“添加”图标，在“输入窗口”中，添加以下信息：</p>
+<ul>
+<li><p>“服务路径”：添加 /sap/bw/ina。</p>
+</li>
+<li><p>“主机规则”：添加 SAP Analytics Cloud 主机。例如，mytenant.us1.sapbusinessobjects.cloud。</p>
+</li>
+<li><p>“允许的方法”：选择 “GET”、“HEAD”、“POST” 和 “OPTIONS”。<br><img src="https://blog-1252828110.cos.ap-shanghai.myqcloud.com/img/04-sac-bw-ias/bw-header.png" alt="bw-get-user"></p>
+</li>
+<li><p>将以下内容添加到“允许的标头”：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">x-csrf-token,x-sap-cid,authorization,mysapsso2,x-request-with,sap-rewriteurl,sap-url-session-id,content-type,accept-language,Access-Control-Allow-Origin</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>将以下内容添加到“显示的标头”：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">x-csrf-toke, sap-rewriteurl,sap-url-session-id,sap-perf-fesrec,sap-system</span><br></pre></td></tr></table></figure>
+<p>“允许凭据”：确保将其选中。<br><img src="https://blog-1252828110.cos.ap-shanghai.myqcloud.com/img/04-sac-bw-ias/bw-header2.png" alt="bw-get-user"><br>保存此信息。</p>
+</li>
+</ul>
+<h3 id="【5】配置rewrite文件"><a href="#【5】配置rewrite文件" class="headerlink" title="【5】配置rewrite文件"></a>【5】配置rewrite文件</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">SetHeader sap-ua-protocol &quot;&quot;</span><br><span class="line">if %&#123;HEADER:clientprotocol&#125; stricmp http [OR]</span><br><span class="line">if %&#123;HEADER:x-forwarded-for-proto&#125; stricmp http [OR]</span><br><span class="line">if %&#123;HEADER:forwarded&#125; regimatch proto&#x3D;http</span><br><span class="line">begin</span><br><span class="line">    SetHeader sap-ua-protocol &quot;http&quot;</span><br><span class="line">end</span><br><span class="line">if %&#123;HEADER:clientprotocol&#125; stricmp https [OR]</span><br><span class="line">if %&#123;HEADER:x-forwarded-for-proto&#125; stricmp https [OR]</span><br><span class="line">if %&#123;HEADER:forwarded&#125; regimatch proto&#x3D;https</span><br><span class="line">begin</span><br><span class="line">    SetHeader sap-ua-protocol &quot;https&quot;</span><br><span class="line">end</span><br><span class="line">if %&#123;HEADER:sap-ua-protocol&#125; strcmp &quot;&quot; [AND]</span><br><span class="line">if %&#123;SERVER_PROTOCOL&#125; stricmp https</span><br><span class="line">begin</span><br><span class="line">    SetHeader sap-ua-protocol &quot;https&quot;</span><br><span class="line">end</span><br><span class="line">if %&#123;RESPONSE_HEADER:set-cookie&#125; !strcmp &quot;&quot; [AND]</span><br><span class="line">if %&#123;HEADER:sap-ua-protocol&#125; stricmp https [AND]</span><br><span class="line">if %&#123;HEADER:user-agent&#125; regmatch &quot;^Mozilla&quot; [AND]</span><br><span class="line">if %&#123;HEADER:user-agent&#125; !regmatch &quot;(Chrome|Chromium)&#x2F;[1-6]?[0-9]\.&quot; [AND]</span><br><span class="line">if %&#123;HEADER:user-agent&#125; !regmatch &quot;(UCBrowser)&#x2F;([0-9]|10|11|12)\.&quot; [AND]</span><br><span class="line">if %&#123;HEADER:user-agent&#125; !regmatch &quot;\(iP.+; CPU .*OS 12_.*\) AppleWebKit\&#x2F;&quot; [AND]</span><br><span class="line">if %&#123;HEADER:user-agent&#125; !regmatch &quot;\(Macintosh;.*Mac OS X 10_14.*(Version\&#x2F;.* Safari.*|AppleWebKit\&#x2F;[0-9\.]+.*\(KHTML, like Gecko\))$&quot;</span><br><span class="line">begin</span><br><span class="line">    RegIRewriteResponseHeader set-cookie &quot;^([^&#x3D;]+)(&#x3D;.*)&quot; &quot;$1$2; SameSite&#x3D;None; Secure&quot;</span><br><span class="line">    RegIRewriteResponseHeader set-cookie &quot;^([^&#x3D;]+)(&#x3D;.*; *SameSite&#x3D;[a-zA-Z]+.*); SameSite&#x3D;None; Secure&quot; $1$2</span><br><span class="line">    RegIRewriteResponseHeader set-cookie &quot;^([^&#x3D;]+)(&#x3D;.*; *Secure.*); Secure&quot; $1$2</span><br><span class="line">End</span><br></pre></td></tr></table></figure>
+<p>配置完成后需要重启应用以使参数和文件生效。</p>
+<h3 id="【6】将自定义-Web-内容安装到-SAP-NetWeaver-服务器"><a href="#【6】将自定义-Web-内容安装到-SAP-NetWeaver-服务器" class="headerlink" title="【6】将自定义 Web 内容安装到 SAP NetWeaver 服务器"></a>【6】将自定义 Web 内容安装到 SAP NetWeaver 服务器</h3><ol>
+<li><p>输入事务代码：<code>SE24</code>。</p>
+</li>
+<li><p>输入“对象类型”。<code>ZCL_DUMMYAUTH_SERVICE</code>，选择“创建”，然后选择“保存”。</p>
+</li>
+<li><p>转到“接口”选项卡，并添加 <code>IF_HTTP_EXTENSION</code>及其说明。</p>
+</li>
+<li><p>转到“方法”选项卡，并添加以下信息：</p>
+</li>
+<li><p>“方法”：<code>IF_HTTP_EXTENSION~HANDLE_REQUEST</code></p>
+</li>
+<li><p>“级别”：Instance Method</p>
+</li>
+<li><p>“可见性”：Public</p>
+</li>
+<li><p>“说明”：添加说明</p>
+</li>
+<li><p>双击 “IF_HTTP_EXTENSION~HANDLE_REQUEST” 并添加以下代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">method IF_HTTP_EXTENSION~HANDLE_REQUEST.</span><br><span class="line">    DATA:</span><br><span class="line">          html_content TYPE string.</span><br><span class="line">    html_content &#x3D; &#39;&lt;html&gt;&lt;script type&#x3D;&quot;text&#x2F;javascript&quot;&gt;window.close();&lt;&#x2F;script&gt;&lt;&#x2F;html&gt;&#39;.</span><br><span class="line">    server-&gt;response-&gt;set_header_field( name &#x3D; &#39;Cache-Control&#39; value &#x3D; &#39;no-cache,no-store&#39;).</span><br><span class="line">    server-&gt;response-&gt;set_cdata( data &#x3D; html_content ).</span><br><span class="line">endmethod.</span><br></pre></td></tr></table></figure></li>
+<li><p>选择“保存”，然后选择“激活”。</p>
+</li>
+<li><p>输入事务代码：<code>SICF</code>。</p>
+</li>
+<li><p>输入“服务路径”：/sap/bw/ina，然后按 Enter。<br>在  “default_host”   “sap”   “bw”  下，右键单击 “ina”，然后选择“新建子元素”。</p>
+</li>
+<li><p>在“服务名称”中，输入 auth。添加说明。</p>
+</li>
+<li><p>打开“处理程序列表”选项卡，然后输入 ZCL_DUMMYAUTH_SERVICE。</p>
+</li>
+<li><p>保存并返回到主菜单。</p>
+</li>
+<li><p>（可选）检查是否已安装授权包。<br>在浏览器中打开以下 URL：https://<Your_ABAP_System>/sap/bw/ina/GetServerInfo?sap-client=<Your_Client_ID>。确保重定向到 IdP 页面，并且登录后看到的不是 404 页面。<br>将 <Your_ABAP_System> 替换为 ABAP 系统主机，将 <Your_Client_ID> 替换为 SAP BW 客户端 ID。<br>验证最终用户的 Web 浏览器配置和访问权限。</p>
+</li>
+</ol>
+<h2 id="BW-SAML2-0配置"><a href="#BW-SAML2-0配置" class="headerlink" title="BW SAML2.0配置"></a>BW SAML2.0配置</h2><h3 id="【1】启用SAML2-0服务"><a href="#【1】启用SAML2-0服务" class="headerlink" title="【1】启用SAML2.0服务"></a>【1】启用SAML2.0服务</h3><ol>
+<li>在BW系统中，启动SAML 2.0配置应用程序（事务码SAML2）。  </li>
+<li>在“ SAP GUI安全性”对话框中，选择“允许”。</li>
+<li>选择Enable SAML 2.0 Support Create SAML 2.0 Local Provider。</li>
+<li>输入提供者的名称。<blockquote>
+<p>注意的是服务提供商名称应与您的身份提供商名称不同。</p>
+</blockquote>
+</li>
+<li>选择下一步。</li>
+<li>选择下一步。</li>
+<li>在“SAML2.0 Local Provider Configuration”屏幕上的“Service Provider Settings”步骤中，将“Selection Mode”字段更改为“Automatic”。</li>
+<li>选择完成。<br>注意<br>此过程仅涉及启用SAML 2.0。启用后，您可以配置服务提供者支持的绑定，信任身份提供者，配置身份联盟以及使用SAML保护资源。该配置将创建两个安全存储和转发（SSF）应用程序，并将个人安全环境（PSE）文件与它们相关联。 PSE文件包含服务提供商的签名和加密密钥对。</li>
+<li>选择编辑。</li>
+<li>转到选项卡Service Provider Settings，将Legacy Systems Support (Issue Logon Ticket)切换为On。</li>
+<li>选择保存。</li>
+</ol>
+<h3 id="【2】BW端导入IDP证书"><a href="#【2】BW端导入IDP证书" class="headerlink" title="【2】BW端导入IDP证书"></a>【2】BW端导入IDP证书</h3><ol>
+<li>在BW系统中，启动SAML 2.0配置应用程序（事务码SAML2）。</li>
+<li>转到“受信任的提供程序”选项卡。</li>
+<li>在显示字段中打开受信任的提供程序的下拉框。</li>
+<li>选择身份提供者。</li>
+<li>选择添加上传元数据文件。<br><img src="https://blog-1252828110.cos.ap-shanghai.myqcloud.com/img/04-sac-bw-ias/bw-upload-saml.png" alt="bw-config"></li>
+</ol>
+<blockquote>
+<p>注意：您也可以手动添加受信任的提供程序<br>6. 选择浏览，并提供身份提供者的元数据XML文件的路径。<br>7. 选择下一步。<br>8. 选择从文件上传，然后选择浏览。<br>9. 提供公共密钥证书的路径，服务提供商可以使用该路径来验证签名。<br><img src="https://blog-1252828110.cos.ap-shanghai.myqcloud.com/img/04-sac-bw-ias/bw-config.png" alt="bw-config"><br>10. 在“ SAML 2.0配置”屏幕上，默认保留以下步骤，直到步骤9 –身份验证要求。<br>11. 在“身份验证需求”屏幕上的“身份验证响应”下，更改以下参数值。</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>参数值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Assertion Consumer Service</td>
+<td>Applicatoin URL</td>
+</tr>
+<tr>
+<td>Binding</td>
+<td>HTTP POST</td>
+</tr>
+<tr>
+<td>12. 当前界面选择完成.</td>
+<td></td>
+</tr>
+</tbody></table>
+<h3 id="【3】问题和解决方案"><a href="#【3】问题和解决方案" class="headerlink" title="【3】问题和解决方案"></a>【3】问题和解决方案</h3><ol>
+<li>BW端导入IDP证书过程需要IDP的CER格式证书文件。SAP云上的IDP虽然提供了证书的内容信息，但是无法下载。<br>解决方案：复制证书内容和格式到空的TXT文档中，保存后修改后缀格式为.cer.在BW端尝试导入后被识别到，问题解决。</li>
+<li>整个配置过程完成后，部分用户登入SAC出现获取不到数据的情况。<br>解决方案：根据SAP反馈的建议，确认为sametie cookie的设置问题，参考文档连接<br><a href="https://help.sap.com/viewer/00f68c2e08b941f081002fd3691d86a7/release/en-US/c863b66d03154c81a5f1bee769bb2713.html" target="_blank" rel="noopener">https://help.sap.com/viewer/00f68c2e08b941f081002fd3691d86a7/release/en-US/c863b66d03154c81a5f1bee769bb2713.html</a></li>
+</ol>
+<h2 id="浏览器设定"><a href="#浏览器设定" class="headerlink" title="浏览器设定"></a>浏览器设定</h2><p>浏览器相关设定包括：允许Cookies，允许网站使用cookies<br><img src="https://blog-1252828110.cos.ap-shanghai.myqcloud.com/img/04-sac-bw-ias/chrome1.png" alt="bw-config"><br><img src="https://blog-1252828110.cos.ap-shanghai.myqcloud.com/img/04-sac-bw-ias/chrome2.png" alt="bw-config"></p>
+</div></article></div></main><footer><div class="paginator"><a href="/2020/08/26/SAP-%E4%BA%91%E5%B9%B3%E5%8F%B0%E5%85%A5%E9%97%A8%E7%BA%A7%E6%9D%90%E6%96%99%E5%88%97%E8%A1%A8/" class="next">下一篇</a></div><div id="vcomment"></div><script src="//unpkg.com/valine/dist/Valine.min.js"></script><script>var GUEST_INFO = ['nick','mail'];
+var guest_info = ''.split(',').filter(function(item){
+  return GUEST_INFO.indexOf(item) > -1
+});
+guest_info = guest_info.length == 0 ? GUEST_INFO :guest_info;
+//- console.log(theme.valine);
+new Valine({
+  el:'#vcomment',
+  notify: false,
+  verify: false,
+  appId:'cQ13Xf23drRL1QT3vRom4f3C-gzGzoHsz',
+  appKey:'w3b0HvfDDdp5J4t7ikgOzKtN',
+  placeholder:'请评论',
+  avatar:'mm',
+  guest_info:guest_info,
+  pageSize:'10'
+})
+</script><div class="copyright"><p>© 2015 - 2021 <a href="https://milkdeliver.github.io">Sam Sun</a>, powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/pinggod/hexo-theme-apollo" target="_blank">hexo-theme-apollo</a>.</p></div></footer></div><script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" integrity="sha384-crwIf/BuaWM9rM65iM+dWFldgQ1Un8jWZMuh3puxb8TOY9+linwLoI7ZHZT+aekW" crossorigin="anonymous"></script><script>(function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;e=o.createElement(i);r=o.getElementsByTagName(i)[0];e.src='//www.google-analytics.com/analytics.js';r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));ga('create',"UA-134861474-2",'auto');ga('send','pageview');</script></body></html>
