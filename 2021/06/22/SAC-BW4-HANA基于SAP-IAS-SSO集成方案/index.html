@@ -19,8 +19,8 @@
 </li>
 <li><a href="#bw-cors配置">BW CORS配置</a><ul>
 <li><a href="#1bw参数调整">【1】BW参数调整</a></li>
-<li><a href="#bw-as-abap安装ssl证书">BW AS ABAP安装SSL证书</a></li>
-<li><a href="#sicf激活相应服务">SICF激活相应服务</a></li>
+<li><a href="#2bw-as-abap安装ssl证书">【2】BW AS ABAP安装SSL证书</a></li>
+<li><a href="#3sicf激活相应服务">【3】SICF激活相应服务</a></li>
 <li><a href="#4维护http-allowlist配置">【4】维护HTTP Allowlist配置。</a></li>
 <li><a href="#5配置rewrite文件">【5】配置rewrite文件</a></li>
 <li><a href="#6将自定义-web-内容安装到-sap-netweaver-服务器">【6】将自定义 Web 内容安装到 SAP NetWeaver 服务器</a></li>
@@ -57,8 +57,8 @@
 <h2 id="BW-CORS配置"><a href="#BW-CORS配置" class="headerlink" title="BW CORS配置"></a>BW CORS配置</h2><h3 id="【1】BW参数调整"><a href="#【1】BW参数调整" class="headerlink" title="【1】BW参数调整"></a>【1】BW参数调整</h3><p>通过RZ10设置DEFAULT.PFL 文件中的参数：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">icf&#x2F;cors_enabled &#x3D; 1</span><br><span class="line">icm&#x2F;HTTP&#x2F;mod_0 &#x3D; PREFIX&#x3D;&#x2F;,FILE&#x3D;&#x2F;sapmnt&#x2F;BWD&#x2F;profile&#x2F;rewrite.txt</span><br></pre></td></tr></table></figure>
 <p><img src="https://blog-1252828110.cos.ap-shanghai.myqcloud.com/img/04-sac-bw-ias/bw-rz10.png" alt="bw-rz10"><br>允许系统使用CORS，和配置SAC需要的rewrite文件。</p>
-<h3 id="BW-AS-ABAP安装SSL证书"><a href="#BW-AS-ABAP安装SSL证书" class="headerlink" title="BW AS ABAP安装SSL证书"></a>BW AS ABAP安装SSL证书</h3><p>建议使用CSR文件的方式获取证书，通过STRSUTSSO2进行证书安装。<br><img src="https://blog-1252828110.cos.ap-shanghai.myqcloud.com/img/04-sac-bw-ias/bw-csr.png" alt="bw-csr"></p>
-<h3 id="SICF激活相应服务"><a href="#SICF激活相应服务" class="headerlink" title="SICF激活相应服务"></a>SICF激活相应服务</h3><p>执行事务码SICF激活SAC会涉及到SICF功能节点：</p>
+<h3 id="【2】BW-AS-ABAP安装SSL证书"><a href="#【2】BW-AS-ABAP安装SSL证书" class="headerlink" title="【2】BW AS ABAP安装SSL证书"></a>【2】BW AS ABAP安装SSL证书</h3><p>建议使用CSR文件的方式获取证书，通过STRSUTSSO2进行证书安装。<br><img src="https://blog-1252828110.cos.ap-shanghai.myqcloud.com/img/04-sac-bw-ias/bw-csr.png" alt="bw-csr"></p>
+<h3 id="【3】SICF激活相应服务"><a href="#【3】SICF激活相应服务" class="headerlink" title="【3】SICF激活相应服务"></a>【3】SICF激活相应服务</h3><p>执行事务码SICF激活SAC会涉及到SICF功能节点：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;sap&#x2F;bw&#x2F;ina&#x2F;GetCatalog</span><br><span class="line">&#x2F;sap&#x2F;bw&#x2F;ina&#x2F;GetResponse</span><br><span class="line">&#x2F;sap&#x2F;bw&#x2F;ina&#x2F;GetServerInfo</span><br><span class="line">&#x2F;sap&#x2F;bw&#x2F;ina&#x2F;ValueHelp</span><br><span class="line">&#x2F;sap&#x2F;bw&#x2F;ina&#x2F;BatchProcessing</span><br><span class="line">&#x2F;sap&#x2F;bw&#x2F;ina&#x2F;Logoff</span><br></pre></td></tr></table></figure>
 <p><img src="https://blog-1252828110.cos.ap-shanghai.myqcloud.com/img/04-sac-bw-ias/bw-sicf.png" alt="bw-sicf"></p>
 <p>右键GetServerInfo服务，进行测试。如下则表示服务正常，且证书正确。<br><img src="https://blog-1252828110.cos.ap-shanghai.myqcloud.com/img/04-sac-bw-ias/bw-get-user.png" alt="bw-get-user"></p>
@@ -168,7 +168,7 @@
 <li>整个配置过程完成后，部分用户登入SAC出现获取不到数据的情况。<br>解决方案：根据SAP反馈的建议，确认为sametie cookie的设置问题，参考文档连接<br><a href="https://help.sap.com/viewer/00f68c2e08b941f081002fd3691d86a7/release/en-US/c863b66d03154c81a5f1bee769bb2713.html" target="_blank" rel="noopener">https://help.sap.com/viewer/00f68c2e08b941f081002fd3691d86a7/release/en-US/c863b66d03154c81a5f1bee769bb2713.html</a></li>
 </ol>
 <h2 id="浏览器设定"><a href="#浏览器设定" class="headerlink" title="浏览器设定"></a>浏览器设定</h2><p>浏览器相关设定包括：允许Cookies，允许网站使用cookies<br><img src="https://blog-1252828110.cos.ap-shanghai.myqcloud.com/img/04-sac-bw-ias/chrome1.png" alt="bw-config"><br><img src="https://blog-1252828110.cos.ap-shanghai.myqcloud.com/img/04-sac-bw-ias/chrome2.png" alt="bw-config"></p>
-</div></article></div></main><footer><div class="paginator"><a href="/2020/08/26/SAP-%E4%BA%91%E5%B9%B3%E5%8F%B0%E5%85%A5%E9%97%A8%E7%BA%A7%E6%9D%90%E6%96%99%E5%88%97%E8%A1%A8/" class="next">下一篇</a></div><div id="vcomment"></div><script src="//unpkg.com/valine/dist/Valine.min.js"></script><script>var GUEST_INFO = ['nick','mail'];
+</div></article></div></main><footer><div class="paginator"><a href="/2020/08/26/SAP-%E4%BA%91%E5%B9%B3%E5%8F%B0%E5%85%A5%E9%97%A8%E7%BA%A7%E6%9D%90%E6%96%99%E5%88%97%E8%A1%A8/" class="next">NEXT</a></div><div id="vcomment"></div><script src="//unpkg.com/valine/dist/Valine.min.js"></script><script>var GUEST_INFO = ['nick','mail'];
 var guest_info = ''.split(',').filter(function(item){
   return GUEST_INFO.indexOf(item) > -1
 });
