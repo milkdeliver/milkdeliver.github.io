@@ -1,5 +1,19 @@
 <!DOCTYPE html><html lang="CN"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> BTP Alicloud Cloud Foundry环境下的账户管理 · 送奶工的日常</title><meta name="description" content="BTP Alicloud Cloud Foundry环境下的账户管理 - Sam Sun"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/favicon.png"><link rel="stylesheet" href="/css/apollo.css"><link rel="search" type="application/opensearchdescription+xml" href="https://milkdeliver.github.io/atom.xml" title="送奶工的日常"><meta name="generator" content="Hexo 4.2.0"><link rel="alternate" href="/atom.xml" title="送奶工的日常" type="application/atom+xml">
-</head><body><div class="wrap"><header><a href="/" class="logo-link"><img src="/favicon.png" alt="logo"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/" target="_self" class="nav-list-link">BLOG</a></li><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">ARCHIVE</a></li><li class="nav-list-item"><a href="/me/" target="_self" class="nav-list-link">ME</a></li><li class="nav-list-item"><a href="https://github.com/milkdeliver" target="_blank" class="nav-list-link">GITHUB</a></li><li class="nav-list-item"><a href="/atom.xml" target="_self" class="nav-list-link">RSS</a></li></ul></header><main class="container"><div class="post"><article class="post-block"><h1 class="post-title">BTP Alicloud Cloud Foundry环境下的账户管理</h1><div class="post-info">Mar 28, 2022</div><div class="post-content"><h2 id="SAP-Universe简介"><a href="#SAP-Universe简介" class="headerlink" title="SAP Universe简介"></a>SAP Universe简介</h2><p>如今云技术已经不在是趋势，而是势在必行的既定政策。影响着个人，组织，公司乃至国家层面。SAP毫无疑问也在做着痛苦而坚定云转型工作。</p>
+</head><body><div class="wrap"><header><a href="/" class="logo-link"><img src="/favicon.png" alt="logo"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/" target="_self" class="nav-list-link">BLOG</a></li><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">ARCHIVE</a></li><li class="nav-list-item"><a href="/me/" target="_self" class="nav-list-link">ME</a></li><li class="nav-list-item"><a href="https://github.com/milkdeliver" target="_blank" class="nav-list-link">GITHUB</a></li><li class="nav-list-item"><a href="/atom.xml" target="_self" class="nav-list-link">RSS</a></li></ul></header><main class="container"><div class="post"><article class="post-block"><h1 class="post-title">BTP Alicloud Cloud Foundry环境下的账户管理</h1><div class="post-info">Mar 28, 2022</div><div class="post-content"><!-- TOC -->
+
+<ul>
+<li><a href="#sap-universe简介">SAP Universe简介</a></li>
+<li><a href="#sap-alicloud-btp-cloud-foundry独特性">SAP AliCloud BTP Cloud Foundry独特性</a></li>
+<li><a href="#新账户">新账户</a><ul>
+<li><a href="#1注册新账号">1.注册新账号</a></li>
+<li><a href="#2重置账户密码">2.重置账户密码</a></li>
+<li><a href="#3添加新成员">3.添加新成员</a></li>
+<li><a href="#4分配权限">4.分配权限</a></li>
+</ul>
+</li>
+</ul>
+<!-- /TOC -->
+<h2 id="SAP-Universe简介"><a href="#SAP-Universe简介" class="headerlink" title="SAP Universe简介"></a>SAP Universe简介</h2><p>如今云技术已经不在是趋势，而是势在必行的既定政策。影响着个人，组织，公司乃至国家层面。SAP毫无疑问也在做着痛苦而坚定云转型工作。</p>
 <p>在SAP云构建中有一个重要个概念和底层设计叫Universe（宇宙），每一个宇宙都能独立运转，在特定的场景之下也能够架起桥梁。</p>
 <p>宇宙的概念会涉及区域、运营者和拥有者。区域就是字面意思地域的意思，SAP在全球拥有多个数据中心，在世界各个重要城市部署了数据服务，比如德国、新加坡、北美、日本、中国等等。运营者会依据他国的数据安全法规范运作者合法身份，主要职责是保证当前宇宙正常运转。拥有者就是实际拥有当前云的所有者，包括SAP和合作伙伴。<br><img src="https://blog-1310245433.cos.ap-shanghai.myqcloud.com/user-management/1.png" alt="1"></p>
 <h2 id="SAP-AliCloud-BTP-Cloud-Foundry独特性"><a href="#SAP-AliCloud-BTP-Cloud-Foundry独特性" class="headerlink" title="SAP AliCloud BTP Cloud Foundry独特性"></a>SAP AliCloud BTP Cloud Foundry独特性</h2><p>SAP为了符合中国工信部数据安全法，针对中国市场部署了只属于中国的SAP AliCloud Universe。这朵云只开放给中国国内的企业，数据安全受到严格的保护。</p>
