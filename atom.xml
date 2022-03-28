@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://milkdeliver.github.io/"/>
-  <updated>2022-03-28T06:31:51.272Z</updated>
+  <updated>2022-03-28T07:48:17.671Z</updated>
   <id>https://milkdeliver.github.io/</id>
   
   <author>
@@ -15,6 +15,28 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>BTP Alicloud Cloud Foundry环境下的账户管理</title>
+    <link href="https://milkdeliver.github.io/2022/03/28/BTP%E7%8E%AF%E5%A2%83%E4%B8%8B%E7%9A%84%E8%B4%A6%E6%88%B7%E7%AE%A1%E7%90%86/"/>
+    <id>https://milkdeliver.github.io/2022/03/28/BTP%E7%8E%AF%E5%A2%83%E4%B8%8B%E7%9A%84%E8%B4%A6%E6%88%B7%E7%AE%A1%E7%90%86/</id>
+    <published>2022-03-28T06:35:30.000Z</published>
+    <updated>2022-03-28T07:48:17.671Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="SAP-Universe简介"><a href="#SAP-Universe简介" class="headerlink" title="SAP Universe简介"></a>SAP Universe简介</h2><p>如今云技术已经不在是趋势，而是势在必行的既定政策。影响着个人，组织，公司乃至国家层面。SAP毫无疑问也在做着痛苦而坚定云转型工作。</p><p>在SAP云构建中有一个重要个概念和底层设计叫Universe（宇宙），每一个宇宙都能独立运转，在特定的场景之下也能够架起桥梁。</p><p>宇宙的概念会涉及区域、运营者和拥有者。区域就是字面意思地域的意思，SAP在全球拥有多个数据中心，在世界各个重要城市部署了数据服务，比如德国、新加坡、北美、日本、中国等等。运营者会依据他国的数据安全法规范运作者合法身份，主要职责是保证当前宇宙正常运转。拥有者就是实际拥有当前云的所有者，包括SAP和合作伙伴。<br><img src="https://blog-1310245433.cos.ap-shanghai.myqcloud.com/user-management/1.png" alt="1"></p><h2 id="SAP-AliCloud-BTP-Cloud-Foundry独特性"><a href="#SAP-AliCloud-BTP-Cloud-Foundry独特性" class="headerlink" title="SAP AliCloud BTP Cloud Foundry独特性"></a>SAP AliCloud BTP Cloud Foundry独特性</h2><p>SAP为了符合中国工信部数据安全法，针对中国市场部署了只属于中国的SAP AliCloud Universe。这朵云只开放给中国国内的企业，数据安全受到严格的保护。</p><p>区别于已存SAP公有云账号管理，Alicloud有<strong>独立的账户管理体系</strong>。带来最明显的使用问题就是之前创建的S-User不互通，因此如果需要添加新的使用者时，需要重新创建账户。</p><h2 id="新账户"><a href="#新账户" class="headerlink" title="新账户"></a>新账户</h2><h3 id="1-注册新账号"><a href="#1-注册新账号" class="headerlink" title="1.注册新账号"></a>1.注册新账号</h3><p>通过<a href="https://awmtxn6rh.accounts.sapcloud.cn/ui/public/showRegisterForm?spName=awmtxn6rh.accounts.ondemand.com" target="_blank" rel="noopener">BTP的注册链接</a>，让项目开发者，使用者自己注册新的帐户。<br><img src="https://blog-1310245433.cos.ap-shanghai.myqcloud.com/user-management/2.png" alt="2"></p><h3 id="2-重置账户密码"><a href="#2-重置账户密码" class="headerlink" title="2.重置账户密码"></a>2.重置账户密码</h3><p>当用户忘记了密码或者未及时激活BTP的账号时，使用<a href="https://awmtxn6rh.accounts.sapcloud.cn/ui/createForgottenPasswordMail?spId=500964f6e4b0f3cba101f701&targetUrl=&sourceUrl=" target="_blank" rel="noopener">重置密码的服务</a>完成账号密码重置的工作。<br><img src="https://blog-1310245433.cos.ap-shanghai.myqcloud.com/user-management/3.png" alt="3"></p><h3 id="3-添加新成员"><a href="#3-添加新成员" class="headerlink" title="3.添加新成员"></a>3.添加新成员</h3><p>当用户创建之后，超管可以通过BTP的登陆链接 <a href="https://cockpit.cn40.platform.sapcloud.cn/cockpit" target="_blank" rel="noopener">https://cockpit.cn40.platform.sapcloud.cn/cockpit</a> 进入管理驾驶舱添加新注册的用户。<br><img src="https://blog-1310245433.cos.ap-shanghai.myqcloud.com/user-management/4.png" alt="4"></p><h3 id="4-分配权限"><a href="#4-分配权限" class="headerlink" title="4.分配权限"></a>4.分配权限</h3><p>当添加完毕之后，需要为新添加的成员分配相应的权限，之后让新成员通过驾驶舱的链接登陆，就可以看到自己所用户账户权限了。<br><img src="https://blog-1310245433.cos.ap-shanghai.myqcloud.com/user-management/5.png" alt="5"></p><p>通过以上的步奏就能完成BTP CF环境的用户管理了。如果其中有些问题实在是无法解决，请及时联系SAP CSP们，从他们那边获取更多的有效的帮助。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h2 id=&quot;SAP-Universe简介&quot;&gt;&lt;a href=&quot;#SAP-Universe简介&quot; class=&quot;headerlink&quot; title=&quot;SAP Universe简介&quot;&gt;&lt;/a&gt;SAP Universe简介&lt;/h2&gt;&lt;p&gt;如今云技术已经不在是趋势，而是势在必行的既定
+      
+    
+    </summary>
+    
+    
+    
+  </entry>
   
   <entry>
     <title>SAP Cloud Platform Integration Suite自助式开通操作</title>
